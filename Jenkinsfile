@@ -1,3 +1,4 @@
+@Library('shared-library') _
 pipeline {
     agent any
     stages {
@@ -5,8 +6,10 @@ pipeline {
             agent {
                 docker { image 'maven:3.8.1-adoptopenjdk-11' }
             }
-            steps {
-                sh 'mvn -B -DskipTests clean package'
+            steps steps {
+                script {
+                    maven.build()
+                }
             }
         }
         stage('Sonar') {
@@ -25,3 +28,4 @@ pipeline {
         
     }
 }
+
